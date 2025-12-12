@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Gran Misión Verde - Conciencia Verde</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    </style>
+</head>
+<body class="bg-green-50">
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 bg-gradient-to-r from-green-500 to-cyan-500 shadow-md">
+        <div class="max-w-6xl mx-auto px-8 py-4 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-3 text-white font-bold text-lg hover:opacity-80">
+                <img src="/img/logo/Gemini_Generated_Image_xikpcuxikpcuxikp (1).png" alt="Logo" class="w-12 h-12">
+                Conciencia Verde
+            </a>
+            <a href="index.html" class="text-white font-semibold hover:opacity-80">← Volver al Inicio</a>
+        </div>
+    </nav>
+
+    <!-- Historieta Viewer -->
+    <div class="max-w-4xl mx-auto px-8 py-12">
+        <h1 class="text-4xl font-bold text-center text-green-600 mb-8">La Gran Misión Verde de San Mateo</h1>
+        
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden mb-8">
+            <img id="escenaImage" src="/images/escena1.png" alt="Escena" class="w-full h-auto object-cover">
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-lg p-8 mb-8">
+            <h2 id="escenaTitulo" class="text-3xl font-bold text-green-600 mb-4">Amanecer en San Mateo</h2>
+            <p id="escenaDescripcion" class="text-lg text-gray-700 leading-relaxed">Luna y un niño descubren que la basura está contaminando San Mateo de Huanchor. Deciden hacer algo al respecto.</p>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="flex justify-between items-center mb-8">
+            <button onclick="anterior()" id="btnAnterior" class="bg-cyan-500 disabled:opacity-50 text-white px-8 py-3 rounded-full font-bold hover:bg-green-600 transition">
+                ← Anterior
+            </button>
+            <span id="paginaActual" class="text-xl font-bold text-green-600">Página 1 de 6</span>
+            <button onclick="siguiente()" id="btnSiguiente" class="bg-cyan-500 text-white px-8 py-3 rounded-full font-bold hover:bg-green-600 transition">
+                Siguiente →
+            </button>
+        </div>
+
+        <!-- Page Selector -->
+        <div class="bg-white rounded-2xl shadow-lg p-6">
+            <h3 class="text-xl font-bold text-green-600 mb-4 text-center">Ir a una página</h3>
+            <div id="paginasContainer" class="grid grid-cols-3 md:grid-cols-6 gap-2"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white text-center py-8 mt-16">
+        <p>&copy; 2025 Conciencia Verde. Historieta: La Gran Misión Verde de San Mateo</p>
+    </footer>
+
+    <script>
+        const escenas = [
+            {
+                titulo: "Amanecer en San Mateo",
+                imagen: "/img/histo1/Escena1.png",
+                descripcion: "Luna y un niño descubren que la basura está contaminando San Mateo de Huanchor. Deciden hacer algo al respecto."
+            },
+            {
+                titulo: "El Río que Habla",
+                imagen: "/img/histo1/Escena2.png",
+                descripcion: "Los niños conocen a Rimita, el pez guardián del río, quien explica que está enfermo por la contaminación."
+            },
+            {
+                titulo: "La Misión Verde",
+                imagen: "/img/histo1/Escena3.png",
+                descripcion: "Rimita enseña a los niños que separar basura en tachos de colores y no botar basura salvaría el río."
+            },
+            {
+                titulo: "Unidos por el Cambio",
+                imagen: "/img/histo1/Escena4.png",
+                descripcion: "Toda la comunidad se une para limpiar las calles y reciclar juntos. Cada pedacito limpio ayuda al planeta."
+            },
+            {
+                titulo: "El Río Vuelve a Sonreír",
+                imagen: "/img/histo1/Escena5.png",
+                descripcion: "¡Lo logramos! San Mateo vuelve a brillar. El río está limpio y los peces nadan felices. La misión verde fue un éxito."
+            },
+            {
+                titulo: "Mensaje Final",
+                imagen: "/img/histo1/mensajefinal.png",
+                descripcion: "Cuidar San Mateo de Huanchor es cuidar nuestra casa. ¡Juntos podemos mantenerla limpia, verde y llena de vida!"
+            }
+        ];
+
+        let currentPage = 0;
+
+        function actualizarUI() {
+            const escena = escenas[currentPage];
+            document.getElementById('escenaImage').src = escena.imagen;
+            document.getElementById('escenaTitulo').textContent = escena.titulo;
+            document.getElementById('escenaDescripcion').textContent = escena.descripcion;
+            document.getElementById('paginaActual').textContent = `Página ${currentPage + 1} de ${escenas.length}`;
+            
+            document.getElementById('btnAnterior').disabled = currentPage === 0;
+            document.getElementById('btnSiguiente').disabled = currentPage === escenas.length - 1;
+
+            // Actualizar botones de páginas
+            document.querySelectorAll('.pagina-btn').forEach((btn, idx) => {
+                if (idx === currentPage) {
+                    btn.classList.add('bg-green-600', 'text-white');
+                    btn.classList.remove('bg-green-100', 'text-green-600', 'hover:bg-green-200');
+                } else {
+                    btn.classList.remove('bg-green-600', 'text-white');
+                    btn.classList.add('bg-green-100', 'text-green-600', 'hover:bg-green-200');
+                }
+            });
+        }
+
+        function siguiente() {
+            if (currentPage < escenas.length - 1) {
+                currentPage++;
+                actualizarUI();
+            }
+        }
+
+        function anterior() {
+            if (currentPage > 0) {
+                currentPage--;
+                actualizarUI();
+            }
+        }
+
+        function irAPagina(index) {
+            currentPage = index;
+            actualizarUI();
+        }
+
+        function generarBotonesPaginas() {
+            const container = document.getElementById('paginasContainer');
+            escenas.forEach((_, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'pagina-btn py-2 px-3 rounded-lg font-bold transition bg-green-100 text-green-600 hover:bg-green-200';
+                btn.textContent = index + 1;
+                btn.onclick = () => irAPagina(index);
+                container.appendChild(btn);
+            });
+            actualizarUI();
+        }
+
+        generarBotonesPaginas();
+    </script>
+</body>
+</html>

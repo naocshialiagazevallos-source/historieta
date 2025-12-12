@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Canto del Río - Conciencia Verde</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    </style>
+</head>
+<body class="bg-green-50">
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 bg-gradient-to-r from-green-500 to-cyan-500 shadow-md">
+        <div class="max-w-6xl mx-auto px-8 py-4 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-3 text-white font-bold text-lg hover:opacity-80">
+                <img src="/img/logo/Gemini_Generated_Image_xikpcuxikpcuxikp (1).png" alt="Logo" class="w-12 h-12">
+                Conciencia Verde
+            </a>
+            <a href="index.html" class="text-white font-semibold hover:opacity-80">← Volver al Inicio</a>
+        </div>
+    </nav>
+
+    <!-- Historieta Viewer -->
+    <div class="max-w-4xl mx-auto px-8 py-12">
+        <h1 class="text-4xl font-bold text-center text-green-600 mb-8">El Canto del Río de San Mateo</h1>
+        
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden mb-8">
+            <img id="paginaImage" src="/images/p-c3-a1gina1.png" alt="Página" class="w-full h-auto object-cover">
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-lg p-8 mb-8">
+            <h2 id="paginaTitulo" class="text-3xl font-bold text-green-600 mb-4">El Silencio del Jr. Chahuallo</h2>
+            <p id="paginaDescripcion" class="text-lg text-gray-700 leading-relaxed">En el Jr. Chahuallo, el aire sucio no deja respirar. Nadie se da cuenta de que el río también está triste y enfermo por la basura que tiran.</p>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="flex justify-between items-center mb-8">
+            <button onclick="anterior()" id="btnAnterior" class="bg-cyan-500 disabled:opacity-50 text-white px-8 py-3 rounded-full font-bold hover:bg-green-600 transition">
+                ← Anterior
+            </button>
+            <span id="paginaActual" class="text-xl font-bold text-green-600">Página 1 de 4</span>
+            <button onclick="siguiente()" id="btnSiguiente" class="bg-cyan-500 text-white px-8 py-3 rounded-full font-bold hover:bg-green-600 transition">
+                Siguiente →
+            </button>
+        </div>
+
+        <!-- Page Selector -->
+        <div class="bg-white rounded-2xl shadow-lg p-6">
+            <h3 class="text-xl font-bold text-green-600 mb-4 text-center">Ir a una página</h3>
+            <div id="paginasContainer" class="grid grid-cols-2 md:grid-cols-4 gap-2"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white text-center py-8 mt-16">
+        <p>&copy; 2025 Conciencia Verde. Historieta: El Canto del Río de San Mateo</p>
+    </footer>
+
+    <script>
+        const paginas = [
+            {
+                titulo:  "Un día en San Mateo",
+                imagen: "/img/histo3/Ecena1.png",
+                descripcion: "En el Jr. Chahuallo, el aire sucio no deja respirar. Nadie se da cuenta de que el río también está triste y enfermo por la basura que tiran."
+            },
+            {
+                titulo: "Los tachos rebalsan",
+                imagen: "/img/histo3/Ecena2.png",
+                descripcion: "El río quería cantar, pero solo podía susurrar. El agua reflejaba lo que somos: un pueblo olvidado que pasea y pisa sin conciencia."
+            },
+            {
+                titulo: "Camino al colegio",
+                imagen: "/img/histo3/Ecena3.png",
+                descripcion: "Todos celebran, pero nadie recoge. Es alegría sin descuido. Quizás si uno empieza, los demás sigan. Cuando el suelo sonría limpio, el corazón también se alegra."
+            },
+            {
+                titulo: "El río habla",
+                imagen: "/img/histo3/Ecena4.png",
+                descripcion: "¡Ya no huele mal! El viento volvió a jugar nuestros. Cuando el corazón cambia, también cambia el paisaje. San Mateo aprendió que cuidar su tierra es cuidar su alma."
+            },
+            {
+                titulo: "La clase de la Señorita Rocío",
+                imagen: "/img/histo3/Ecena5.png",
+                descripcion: "¡Ya no huele mal! El viento volvió a jugar nuestros. Cuando el corazón cambia, también cambia el paisaje. San Mateo aprendió que cuidar su tierra es cuidar su alma."
+            }, 
+            {
+                titulo: "Los Guardianes del Río",
+                imagen: "/img/histo3/Ecena6.png",
+                descripcion: "¡Ya no huele mal! El viento volvió a jugar nuestros. Cuando el corazón cambia, también cambia el paisaje. San Mateo aprendió que cuidar su tierra es cuidar su alma."
+            },
+            {
+                titulo: "Concientizando a los vecinos",
+                imagen: "/img/histo3/Ecena7.png",
+                descripcion: "¡Ya no huele mal! El viento volvió a jugar nuestros. Cuando el corazón cambia, también cambia el paisaje. San Mateo aprendió que cuidar su tierra es cuidar su alma."
+            },
+            {
+                titulo: "Una mañana diferente",
+                imagen: "/img/histo3/Ecena8.png",
+                descripcion: "¡Ya no huele mal! El viento volvió a jugar nuestros. Cuando el corazón cambia, también cambia el paisaje. San Mateo aprendió que cuidar su tierra es cuidar su alma."
+            },
+            {
+                titulo: "El río vuelve a cantar",
+                imagen: "/img/histo3/Ecena9.png",
+                descripcion: "¡Ya no huele mal! El viento volvió a jugar nuestros. Cuando el corazón cambia, también cambia el paisaje. San Mateo aprendió que cuidar su tierra es cuidar su alma."
+            },
+            {
+                titulo: "Mensaje final",
+                imagen: "/img/histo3/Ecena10.png",
+                descripcion: "¡Ya no huele mal! El viento volvió a jugar nuestros. Cuando el corazón cambia, también cambia el paisaje. San Mateo aprendió que cuidar su tierra es cuidar su alma."
+            }
+        ];
+
+        let currentPage = 0;
+
+        function actualizarUI() {
+            const pagina = paginas[currentPage];
+            document.getElementById('paginaImage').src = pagina.imagen;
+            document.getElementById('paginaTitulo').textContent = pagina.titulo;
+            document.getElementById('paginaDescripcion').textContent = pagina.descripcion;
+            document.getElementById('paginaActual').textContent = `Página ${currentPage + 1} de ${paginas.length}`;
+            
+            document.getElementById('btnAnterior').disabled = currentPage === 0;
+            document.getElementById('btnSiguiente').disabled = currentPage === paginas.length - 1;
+
+            // Actualizar botones de páginas
+            document.querySelectorAll('.pagina-btn').forEach((btn, idx) => {
+                if (idx === currentPage) {
+                    btn.classList.add('bg-green-600', 'text-white');
+                    btn.classList.remove('bg-green-100', 'text-green-600', 'hover:bg-green-200');
+                } else {
+                    btn.classList.remove('bg-green-600', 'text-white');
+                    btn.classList.add('bg-green-100', 'text-green-600', 'hover:bg-green-200');
+                }
+            });
+        }
+
+        function siguiente() {
+            if (currentPage < paginas.length - 1) {
+                currentPage++;
+                actualizarUI();
+            }
+        }
+
+        function anterior() {
+            if (currentPage > 0) {
+                currentPage--;
+                actualizarUI();
+            }
+        }
+
+        function irAPagina(index) {
+            currentPage = index;
+            actualizarUI();
+        }
+
+        function generarBotonesPaginas() {
+            const container = document.getElementById('paginasContainer');
+            paginas.forEach((_, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'pagina-btn py-2 px-3 rounded-lg font-bold transition bg-green-100 text-green-600 hover:bg-green-200';
+                btn.textContent = index + 1;
+                btn.onclick = () => irAPagina(index);
+                container.appendChild(btn);
+            });
+            actualizarUI();
+        }
+
+        generarBotonesPaginas();
+    </script>
+</body>
+</html>
+
